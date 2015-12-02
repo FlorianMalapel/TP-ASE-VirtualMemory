@@ -1,0 +1,61 @@
+##  Makefile
+##  TP9-Virtual_Memory-Malapel&Dhersin
+##
+##  Last update - by jerome on 26/11/2015.
+## 		add : exe mmu_manager oracle
+##  Copyright © 2015 Malapel&Dhersin. All rights reserved.
+
+
+LIBS = -L./libs/ -lhardware
+
+CFLAGS	= -m32 -Wall -ansi -pedantic
+SRC = ./src/
+INC = ./header/
+BIN = ./bin/
+
+
+all: mmu_manager oracle
+
+# generate exe
+mmu_manager: $(BIN)mmu_manager.o $(BIN)mmu_handler.o $(BIN)swap.o
+	gcc $(CFLAG) -o mmu_manager $(BIN)mmu_manager.o $(BIN)mmu_handler.o $(BIN)swap.o $(LIBS)
+
+oracle: $(BIN)oracle.o $(BIN)matrix.o
+	gcc $(CFLAG) -o oracle $(BIN)oracle.o $(BIN)matrix.o $(LIBS)
+
+
+# generate all .o
+$(BIN)mmu_handler.o: $(SRC)mmu_handler.c $(INC)mmu_handler.h $(SRC)swap.c $(INC)swap.h $(INC)mi_syscall.h $(INC)hw_config.h $(INC)hardware.h
+	gcc $(CFLAG) -o $(BIN)mmu_handler.o -c $(SRC)mmu_handler.c
+
+$(BIN)mmu_manager.o: $(SRC)mmu_manager.c $(INC)mmu_handler.h $(SRC)mmu_handler.c $(SRC)swap.c $(INC)swap.h $(INC)mi_syscall.h $(INC)hw_config.h $(INC)hardware.h
+	gcc $(CFLAG) -o $(BIN)mmu_manager.o -c $(SRC)mmu_manager.c
+
+$(BIN)user_process.o: $(SRC)user_process.c $(SRC)matrix.c $(INC)matrix.h $(INC)mi_syscall.h $(INC)hw_config.h $(INC)hardware.h
+	gcc $(CFLAG) -o $(BIN)user_process.o -c $(SRC)user_process.c
+
+$(BIN)mi_kernel.o: $(SRC)mi_kernel.c $(INC)mi_syscall.h $(INC)hw_config.h $(INC)hardware.h
+	gcc $(CFLAG) -o $(BIN)mi_kernel.o -c $(SRC)mi_kernel.c
+
+$(BIN)mi_user.o: $(SRC)mi_user.c $(INC)mi_syscall.h $(INC)hw_config.h $(INC)hardware.h
+	gcc $(CFLAG) -o $(BIN)mi_user.o -c $(SRC)mi_user.c
+
+$(BIN)swap.o: $(SRC)swap.c $(INC)swap.h $(INC)hw_config.h $(INC)hardware.h
+	gcc $(CFLAG) -o $(BIN)swap.o -c $(SRC)swap.c
+ 
+$(BIN)oracle.o: $(SRC)oracle.c $(SRC)matrix.c $(INC)matrix.h $(INC)hw_config.h $(INC)hardware.h
+	gcc $(CFLAG) -o $(BIN)oracle.o -c $(SRC)oracle.c
+
+$(BIN)matrix.o: $(SRC)matrix.c $(INC)matrix.h $(INC)hw_config.h $(INC)hardware.h
+	gcc $(CFLAG) -o $(BIN)matrix.o -c $(SRC)matrix.c
+
+
+clean:
+	rm -rf $(BIN)*.o
+	rm -rf mmu_manager
+	rm -rf oracle
+
+#cleanall
+cleanall: clean
+	rm -rf all
+	clear
