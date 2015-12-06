@@ -17,14 +17,17 @@ int main() {
 	matrix matrix3;
 	char line[1024];
 
-	while(!feof(stdin)) {
-		fgets(line, sizeof(line), stdin);
-	}
+	// while(!feof(stdin)) {
+	// 	fgets(line, sizeof(line), stdin);
+	// }
 	
-	if(sscanf(line, "timestamp: 0x%x, operation: %d, checksum: 0x%x", &timestamp, &operation, &prev_checksum) == 0) {
-		fprintf(stderr, "[oracle] Invalid input\n");
-		exit(1);
-	}
+	// if(sscanf(line, "timestamp: 0x%x, operation: %d, checksum: 0x%x", &timestamp, &operation, &prev_checksum) == 0) {
+	// 	fprintf(stderr, "[oracle] Invalid input\n");
+	// 	exit(1);
+	// }
+
+	printf("saisie operation : 0-add, 1-mult\n");
+	scanf("%d", &operation);
 		
 	srand(timestamp);
 	
