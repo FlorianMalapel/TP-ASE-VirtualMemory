@@ -26,7 +26,7 @@ static int sum(void *ptr) {
 
 
 void init() {
-	printf("init \n");
+	printf("init...\n");
 	void *ptr;
 	int res;
 	
